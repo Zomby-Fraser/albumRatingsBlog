@@ -1,0 +1,557 @@
+<!doctype html>
+<html>
+<head>
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- DataTables Buttons CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
+    <!-- DataTables Responsive CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <!-- DataTables Select CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
+  <style>
+  table.display tbody tr:nth-child(even):hover td {
+	background-color: #d6e2f1 !important;
+}
+table.display tbody tr:nth-child(odd):hover td {
+	background-color: #d6e2f1 !important;
+}
+table.dataTable td {
+   padding-left: 10px;
+} 
+table.dataTable th {
+   padding-left: 10px;
+   font-weight: normal;
+   vertical-align: top;
+}	
+.dataTables_wrapper .dt-buttons {
+	float: none;
+	text-align: left;
+}
+div.dt-button-collection {
+	width: 300px;
+}
+.excelButton {
+	color: white;
+	background-color: green;
+}
+.csvButton {
+	color: white;
+	background-color: #333333;
+}
+.pdfButton {
+	color: white;
+	background-color: #660000;
+}
+.printButton {
+	color: white;
+	background-color: blue;
+}
+.tabhd {
+	background-color:#8099aa;
+}	
+</style>
+<meta charset="utf-8">
+<title>datatables_test.html</title>
+</head>
+  
+  <div class="input-group input-daterange p-2">
+    <strong>Album Years</strong>&nbsp;
+    <input type="text" id="min-year" class="form-control date-range-filter" data-date-format="yyyy" placeholder="From:">
+    <div class="input-group-addon">&nbsp; <strong>to</strong>&nbsp; </div>
+    <input type="text" id="max-year" class="form-control date-range-filter" data-date-format="yyyy" placeholder="To:">
+  </div>
+  <div class="input-group input-ratingrange p-2">
+    <strong>Album Ratings</strong>&nbsp;
+    <select class="form-control" id="min-rating">
+      <option value=""></option>
+      <option value="0.5">0.5</option>
+      <option value="1">1</option>
+      <option value="1.5">1.5</option>s
+      <option value="2">2</option>
+      <option value="2.5">2.5</option>
+      <option value="3">3</option>
+      <option value="3.5">3.5</option>
+      <option value="4">4</option>
+      <option value="4.5">4.5</option>
+      <option value="5">5</option>
+    </select>
+    <div class="input-group-addon">&nbsp; <strong>to</strong>&nbsp; </div>
+    <select class="form-control" id="max-rating">
+      <option value=""></option>
+      <option value="0.5">0.5</option>
+      <option value="1">1</option>
+      <option value="1.5">1.5</option>s
+      <option value="2">2</option>
+      <option value="2.5">2.5</option>
+      <option value="3">3</option>
+      <option value="3.5">3.5</option>
+      <option value="4">4</option>
+      <option value="4.5">4.5</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+
+  <table id="albums-table" class="table-bordered table-striped table-responsive-sm display" cellspacing="0" width="100%">
+    <thead>
+      <tr clas="bg-treas">
+        <th>     </th>
+        <th id="artist">Artist</th>
+        <th id="album">Album</th>
+        <th id="year">Year</th>
+        <th id="genre">Genre</th>
+        <th id="rating">Rating</th>
+      </tr>
+      <tr class="tabhd">
+        <th>Filter <i class="fas fa-arrow-right"></i></th>
+        <th class="thead2 filterhead">Artist</th>
+        <th class="thead2 filterhead">Album</th>
+        <th class="thead2 filterhead">Year</th>
+        <th class="thead2 filterhead">Genre</th>
+        <th class="thead2 filterhead">Rating</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr class="bg-treas">
+        <th>     </th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Year</th>
+        <th>Genre</th>
+        <th>Rating</th>
+      </tr>
+    </tfoot>
+    
+    <tbody>
+      <tr>
+        <td></td>
+        <td>Mastodon</td>
+        <td>Leviathan</td>
+        <td>2004</td>
+        <td>Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>2024: The Band</td>
+        <td>Ashes of the Wake</td>
+        <td>2004</td>
+        <td>Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Album A</td>
+        <td>2024: The Album</td>
+        <td>2004</td>
+        <td>Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Lamb of God</td>
+        <td>Ashes  of the Wake</td>
+        <td>2004</td>
+        <td>Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Eminem</td>
+        <td>The Death of Slim Shady</td>
+        <td>2024</td>
+        <td>Rap</td>
+        <td>4/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Stevie Ray Vaughn</td>
+        <td>Texas Flood</td>
+        <td>1983</td>
+        <td>Blues</td>
+        <td>4/5</td>
+      </td>
+      <tr>
+        <td></td>
+        <td>King Gizzard &amp; The Lizard Wizard</td>
+        <td>Dawn of Eternal Night: An Annihilation of Planet Earth and the Beginning of Merciless Damnation</td>
+        <td>2023</td>
+        <td>Metal</td>
+        <td>3.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Tool</td>
+        <td>Lateralus</td>
+        <td>2001</td>
+        <td>Progressive Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Radiohead</td>
+        <td>OK Computer</td>
+        <td>1997</td>
+        <td>Alternative Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Kendrick Lamar</td>
+        <td>To Pimp a Butterfly</td>
+        <td>2015</td>
+        <td>Hip-Hop</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Pink Floyd</td>
+        <td>The Dark Side of the Moon</td>
+        <td>1973</td>
+        <td>Progressive Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Daft Punk</td>
+        <td>Random Access Memories</td>
+        <td>2013</td>
+        <td>Electronic</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Metallica</td>
+        <td>Master of Puppets</td>
+        <td>1986</td>
+        <td>Thrash Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Beyoncé</td>
+        <td>Lemonade</td>
+        <td>2016</td>
+        <td>R&B</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Fleetwood Mac</td>
+        <td>Rumours</td>
+        <td>1977</td>
+        <td>Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Arcade Fire</td>
+        <td>Funeral</td>
+        <td>2004</td>
+        <td>Indie Rock</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Jimi Hendrix</td>
+        <td>Are You Experienced</td>
+        <td>1967</td>
+        <td>Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Tool</td>
+        <td>Ænima</td>
+        <td>1996</td>
+        <td>Progressive Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Radiohead</td>
+        <td>Kid A</td>
+        <td>2000</td>
+        <td>Alternative Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Kendrick Lamar</td>
+        <td>good kid, m.A.A.d city</td>
+        <td>2012</td>
+        <td>Hip-Hop</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Pink Floyd</td>
+        <td>Wish You Were Here</td>
+        <td>1975</td>
+        <td>Progressive Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Daft Punk</td>
+        <td>Discovery</td>
+        <td>2001</td>
+        <td>Electronic</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Metallica</td>
+        <td>Ride the Lightning</td>
+        <td>1984</td>
+        <td>Thrash Metal</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Beyoncé</td>
+        <td>4</td>
+        <td>2011</td>
+        <td>R&B</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Fleetwood Mac</td>
+        <td>Tusk</td>
+        <td>1979</td>
+        <td>Rock</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Arcade Fire</td>
+        <td>The Suburbs</td>
+        <td>2010</td>
+        <td>Indie Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Jimi Hendrix</td>
+        <td>Axis: Bold as Love</td>
+        <td>1967</td>
+        <td>Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Tool</td>
+        <td>Fear Inoculum</td>
+        <td>2019</td>
+        <td>Progressive Metal</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Radiohead</td>
+        <td>In Rainbows</td>
+        <td>2007</td>
+        <td>Alternative Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Kendrick Lamar</td>
+        <td>DAMN.</td>
+        <td>2017</td>
+        <td>Hip-Hop</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Pink Floyd</td>
+        <td>The Wall</td>
+        <td>1979</td>
+        <td>Progressive Rock</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Daft Punk</td>
+        <td>Homework</td>
+        <td>1997</td>
+        <td>Electronic</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Metallica</td>
+        <td>...And Justice for All</td>
+        <td>1988</td>
+        <td>Thrash Metal</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Beyoncé</td>
+        <td>Beyoncé</td>
+        <td>2013</td>
+        <td>R&B</td>
+        <td>5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Fleetwood Mac</td>
+        <td>Fleetwood Mac</td>
+        <td>1975</td>
+        <td>Rock</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Arcade Fire</td>
+        <td>Neon Bible</td>
+        <td>2007</td>
+        <td>Indie Rock</td>
+        <td>4.5/5</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Jimi Hendrix</td>
+        <td>Electric Ladyland</td>
+        <td>1968</td>
+        <td>Rock</td>
+        <td>5/5</td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+<body>
+</body>
+<script>
+  
+  // Formats and adds options to the dropdown filters
+  function initTable(obj){
+    var api = obj.api();
+    var head_filters = $('.thead2.filterhead');
+    head_filters.each(function (i) {
+      
+      // Grab current header and data. Empty it and add in the drop down boxes
+      var column = api.column(i+1);
+      var column_data_unique = column.data().unique().sort();
+      var column_header = $(head_filters[i]);
+      column_header.empty();
+      column_header.append(`<select id='select-${i}'><option value=''></option></select>`);
+      
+      // Add in the data for each dropdown and add event listener.
+      var new_select_tag = $(`#select-${i}`)
+        .on('change', function () {
+          var entry_escaped = $.fn.dataTable.util.escapeRegex($(this).val());
+          var entry_escaped_regex = '^' + entry_escaped +'$';
+          column.search( entry_escaped ? entry_escaped_regex : '', true, false ).draw();
+        });
+      
+      column_data_unique.each(function (data, j) {
+        new_select_tag.append(`<option value="${data}">${data}</option>`);
+      });
+      
+    });
+  }
+  
+  // Determines if value is within a range. Returns BOOL.
+  function isValueInRange(lower, upper, value) {
+     if (
+          (!lower && !upper) ||
+          (!lower && value <= upper) ||
+          (lower <= value && !upper) ||
+          (lower <= value && value <= upper)
+      ) {
+        return true;
+      }
+      return false;
+  }
+  
+  // Setups a filter for a range of numbers. Currently setup for INTs and fractions with equal denominators
+  // If the desired type is neither the value, as-is, will be compared. 
+  function setupRangeFilters(lower_id, upper_id, column_no, num_type = 'int') {
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+      var lower = $(lower_id);
+      var upper = $(upper_id);
+      var value = data[column_no-1];
+      if (num_type == 'int') {
+        lower = replaceInputWithInt(lower);
+        upper = replaceInputWithInt(upper);
+      }
+      else if (num_type == 'rating'){
+        lower = parseFloat(lower.val().split('/')[0]);
+        upper = parseFloat(upper.val().split('/')[0]);
+        value = parseFloat(value.split('/')[0]);
+      }
+      else {
+        lower = lower.val();
+        upper = upper.val();
+      }
+      return isValueInRange(lower, upper, value);
+     
+    });
+  }
+
+  // Initializes the table
+  const table = $('#albums-table').DataTable({
+    dom: 'lBifrtip',
+    buttons: [
+      'csvHtml5', 'pdfHtml5', 'excelHtml5', 'print', 'colvis'
+    ],
+    language: {
+      searchPanes: {
+          count: '{total} found',
+          countFiltered: '{shown} ({total})'
+      }
+    },
+    colReorder: true,
+    paging: true,
+    lengthMenu: [ [5, 10, 20, 50, 100, 300, 400, 500, 1000, -1], [5, 10, 20, 50, 100, 300, 400, 500, 1000, "All"]],
+    pageLength: 50,
+    ordering: true,
+    responsive: true,
+    searching: true,
+    orderCellsTop: true,
+    initComplete: function () {
+        initTable(this);
+        setupRangeFilters('#min-year', '#max-year', 4);
+        setupRangeFilters('#min-rating', '#max-rating', 6, 'rating');
+      }
+  });
+  
+  // Converts given value to a INT
+  function replaceInputWithInt(element) {
+    var new_int = parseInt(element.val());
+    if (!isNaN(new_int)) {
+      element.prop("value", new_int);
+    }
+    else {
+      element.prop("value", '');
+    }
+    return new_int;
+  }
+  
+
+  // Adds the event listener to the filters to check for changes
+  $('.input-group').change(function() {
+    table.draw();
+  }); 
+</script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.print.min.js"></script>
+    <!-- DataTables Responsive JS -->
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <!-- DataTables Select JS -->
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+</html>
